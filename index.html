@@ -1,1176 +1,723 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>KULTURA TV – Savoir, Inspirer, Entreprendre</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KULTURA TV | Savoir, Inspirer, Entreprendre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --bg: #000;
+            --apple-dark: #161617;
+            --gold: #c9a46a;
+            --text-gray: #86868b;
+            --radius: 22px;
+        }
 
-  <!-- Fonts Google (exemple) -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-  <style>
-    :root{
-      --blue:#111f2f;
-      --gold:#c9a46a;
-      --white:#ffffff;
-      --purple:#b37adf;
-      --bg:#f4f5f9;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:'Nunito',sans-serif;
-      background:var(--bg);
-      color:#222;
-      scroll-behavior:smooth;
-    }
-    img{max-width:100%;display:block;}
-    a{text-decoration:none;color:inherit;}
-    section{padding:70px 8vw;}
-    h1,h2,h3,h4{
-      font-family:'Montserrat',sans-serif;
-      letter-spacing:0.03em;
-    }
-    .btn{
-      display:inline-block;
-      padding:12px 26px;
-      border-radius:999px;
-      border:1px solid transparent;
-      background:var(--gold);
-      color:#fff;
-      font-weight:600;
-      font-size:0.95rem;
-      transition:.3s;
-      cursor:pointer;
-    }
-    .btn.secondary{
-      background:transparent;
-      border-color:var(--gold);
-      color:var(--gold);
-    }
-    .btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
-      background:linear-gradient(135deg,var(--gold),var(--purple));
-      color:#fff;
-      border-color:transparent;
-    }
+        /* HEADER NAV */
+        nav {
+            position: fixed; top: 0; width: 100%; height: 60px;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
+            z-index: 1000; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; border-bottom: 0.5px solid #333;
+        }
+        .logo-box { font-weight: 900; font-size: 1.2rem; color: var(--gold); letter-spacing: -1px; }
 
-    /* HEADER */
-    header{
-      position:fixed;
-      top:0;left:0;right:0;
-      z-index:1000;
-      background:rgba(17,31,47,.96);
-      backdrop-filter:blur(10px);
-      color:#fff;
-    }
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 8vw;
-    }
-    .logo-block{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .logo-k{
-      width:40px;
-      height:40px;
-      background:var(--blue);
-      position:relative;
-      border-radius:6px;
-      overflow:hidden;
-      box-shadow:0 10px 24px rgba(0,0,0,.3);
-    }
-    .logo-k::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg,var(--gold),var(--purple));
-      mix-blend-mode:soft-light;
-      opacity:.6;
-    }
-    .logo-text{
-      font-weight:800;
-      font-size:1.2rem;
-      letter-spacing:0.12em;
-    }
-    .nav ul{
-      list-style:none;
-      display:flex;
-      gap:26px;
-      font-size:0.9rem;
-    }
-    .nav ul li a{
-      position:relative;
-      padding-bottom:4px;
-    }
-    .nav ul li a::after{
-      content:'';
-      position:absolute;
-      left:0;bottom:0;
-      width:0;height:2px;
-      background:var(--gold);
-      transition:.25s;
-    }
-    .nav ul li a:hover::after{width:100%;}
-    .nav-cta{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-size:0.8rem;
-    }
-    .badge-live{
-      background:linear-gradient(135deg,var(--purple),var(--gold));
-      padding:6px 11px;
-      border-radius:999px;
-      text-transform:uppercase;
-      font-weight:700;
-      letter-spacing:0.08em;
-      font-size:0.7rem;
-    }
+        /* SECTION À LA UNE : L'IDENTITÉ KULTURA */
+        .hero-manifesto {
+            min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 100px 8%;
+            background: radial-gradient(circle at 80% 20%, #1a1a1a 0%, #000 100%);
+        }
+        .hero-manifesto span { color: var(--gold); font-weight: 700; letter-spacing: 2px; font-size: 0.9rem; }
+        .hero-manifesto h1 { 
+            font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 900; 
+            letter-spacing: -4px; line-height: 1; margin: 20px 0;
+        }
+        .hero-manifesto p { 
+            font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--text-gray); 
+            max-width: 800px; line-height: 1.4; font-weight: 400;
+        }
 
-    /* HERO */
-    .hero{
-      min-height:100vh;
-      padding-top:90px;
-      display:grid;
-      grid-template-columns:1.1fr 1fr;
-      align-items:center;
-      gap:40px;
-      background:
-        radial-gradient(circle at top left,rgba(201,164,106,.3),transparent 55%),
-        radial-gradient(circle at bottom right,rgba(179,122,223,.35),transparent 55%),
-        #050915;
-      color:#fff;
-    }
-    .hero-text h1{
-      font-size:2.7rem;
-      margin-bottom:18px;
-    }
-    .hero-text h1 span{
-      color:var(--gold);
-    }
-    .hero-tagline{
-      font-size:0.9rem;
-      letter-spacing:0.15em;
-      text-transform:uppercase;
-      color:#cfd4ff;
-      margin-bottom:10px;
-    }
-    .hero-p{
-      font-size:1rem;
-      max-width:480px;
-      margin-bottom:26px;
-      color:#dde1ff;
-    }
-    .hero-cta{
-      display:flex;
-      gap:14px;
-      align-items:center;
-      margin-bottom:24px;
-    }
-    .hero-meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:18px;
-      font-size:0.8rem;
-      color:#c0c4d6;
-    }
-    .hero-meta span{
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-    .dot{
-      width:8px;height:8px;
-      border-radius:50%;
-      background:var(--gold);
-    }
-    .hero-video{
-      position:relative;
-      border-radius:26px;
-      overflow:hidden;
-      box-shadow:0 24px 60px rgba(0,0,0,.6);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .hero-video video,
-    .hero-video iframe{
-      width:100%;
-      height:100%;
-      display:block;
-    }
-    .hero-pill{
-      position:absolute;
-      top:16px;left:16px;
-      padding:7px 14px;
-      border-radius:999px;
-      background:rgba(5,9,21,.8);
-      backdrop-filter:blur(8px);
-      font-size:0.75rem;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .hero-pill small{
-      text-transform:uppercase;
-      letter-spacing:0.08em;
-      color:#cfd4ff;
-    }
+        .info-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px; margin-top: 60px; border-top: 1px solid #333; padding-top: 40px;
+        }
+        .info-item h3 { color: var(--gold); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px; }
+        .info-item p { font-size: 1.1rem; color: #fff; }
 
-    /* SECTIONS GENERIQUES */
-    .section-title{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      margin-bottom:30px;
-      gap:20px;
-    }
-    .section-title h2{
-      font-size:1.8rem;
-      color:var(--blue);
-    }
-    .section-title p{
-      max-width:420px;
-      font-size:0.95rem;
-      color:#555;
-    }
+        .programs-section { padding: 80px 0; background: #000; }
+        .category-header { padding: 0 5% 20px; }
+        .category-header h2 { font-size: 2.2rem; letter-spacing: -1px; font-weight: 800; }
+        
+        .video-scroller {
+            display: flex; gap: 20px; overflow-x: auto; padding: 20px 5%;
+            scroll-behavior: smooth; scrollbar-width: none;
+        }
+        .video-scroller::-webkit-scrollbar { display: none; }
 
-    /* LA CHAINE */
-    .two-cols{
-      display:grid;
-      grid-template-columns:1.2fr 1fr;
-      gap:40px;
-    }
-    .pill{
-      display:inline-block;
-      padding:4px 12px;
-      border-radius:999px;
-      background:rgba(17,31,47,.07);
-      color:var(--blue);
-      font-size:0.75rem;
-      margin-bottom:8px;
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-    }
-    .k-card{
-      background:#fff;
-      border-radius:18px;
-      padding:20px 22px;
-      box-shadow:0 12px 30px rgba(15,23,42,.06);
-      border:1px solid rgba(15,23,42,.04);
-    }
-    .k-stats{
-      display:flex;
-      gap:16px;
-      margin-top:16px;
-    }
-    .k-stat{
-      flex:1;
-      background:linear-gradient(135deg,#111f2f,#182a42);
-      color:#fff;
-      border-radius:14px;
-      padding:16px 18px;
-      font-size:0.85rem;
-    }
-    .k-stat strong{
-      font-size:1.4rem;
-      display:block;
-      margin-bottom:4px;
-    }
+    
+        .episode-card {
+            flex: 0 0 380px; text-decoration: none; color: inherit;
+            transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+        .episode-card:hover { transform: scale(1.03); }
+        
+        .thumb {
+            width: 100%; height: 215px; border-radius: var(--radius);
+            overflow: hidden; background: var(--apple-dark);
+            position: relative; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .play-btn {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s; font-size: 2rem;
+        }
+        .episode-card:hover .play-btn { opacity: 1; }
 
-    /* PROGRAMMES */
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:22px;
-    }
-    .prog-card{
-      background:#fff;
-      border-radius:18px;
-      padding:18px 20px;
-      box-shadow:0 10px 26px rgba(15,23,42,.06);
-      border:1px solid rgba(15,23,42,.04);
-    }
-    .prog-tag{
-      font-size:0.7rem;
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-      color:var(--gold);
-      margin-bottom:6px;
-    }
-    .prog-card h3{
-      font-size:1.05rem;
-      margin-bottom:6px;
-    }
-    .prog-card p{
-      font-size:0.9rem;
-      color:#555;
-      margin-bottom:12px;
-    }
-    .prog-meta{
-      font-size:0.8rem;
-      color:#777;
-    }
+        .meta { margin-top: 15px; }
+        .meta h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; }
+        .meta p { color: var(--text-gray); font-size: 0.9rem; }
 
-    /* GRILLE TV */
-    .gridtv{
-      margin-top:26px;
-      background:#fff;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 12px 32px rgba(15,23,42,.06);
-      border:1px solid rgba(15,23,42,.04);
-    }
-    .gridtv-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:14px 20px;
-      background:var(--blue);
-      color:#fff;
-      font-size:0.9rem;
-    }
-    .gridtv-days button{
-      background:transparent;
-      border:none;
-      color:#cbd5f5;
-      margin-left:10px;
-      font-size:0.8rem;
-      text-transform:uppercase;
-      letter-spacing:0.1em;
-      cursor:pointer;
-      padding-bottom:2px;
-      border-bottom:2px solid transparent;
-    }
-    .gridtv-days button.active{
-      color:#fff;
-      border-color:var(--gold);
-    }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:0.86rem;
-    }
-    th,td{
-      padding:10px 16px;
-      border-bottom:1px solid #eef0f5;
-      text-align:left;
-    }
-    th{
-      background:#f7f8fc;
-      font-weight:600;
-      color:#555;
-    }
-    tbody tr:nth-child(even){
-      background:#fafbff;
-    }
-        .tag-type{
-      display:inline-block;
-      padding:4px 9px;
-      border-radius:999px;
-      font-size:0.72rem;
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-      background:rgba(201,164,106,.12);
-      color:var(--gold);
-    }
-
-    /* EQUIPE */
-    .tabs{
-      display:flex;
-      gap:10px;
-      margin-bottom:20px;
-      flex-wrap:wrap;
-    }
-    .tab-btn{
-      padding:8px 16px;
-      border-radius:999px;
-      background:#e7e9f3;
-      border:none;
-      font-size:0.8rem;
-      text-transform:uppercase;
-      letter-spacing:0.12em;
-      cursor:pointer;
-      color:#444;
-    }
-    .tab-btn.active{
-      background:var(--blue);
-      color:#fff;
-    }
-    .team-grid{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:22px;
-    }
-    .person{
-      background:#fff;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 10px 24px rgba(15,23,42,.06);
-      border:1px solid rgba(15,23,42,.04);
-      position:relative;
-      transition:.3s;
-    }
-    .person img{
-      width:100%;
-      height:210px;
-      object-fit:cover;
-    }
-    .person-body{
-      padding:14px 14px 16px;
-    }
-    .person h4{
-      font-size:0.98rem;
-      margin-bottom:4px;
-      color:var(--blue);
-    }
-    .person span{
-      font-size:0.8rem;
-      color:#777;
-    }
-    .person:hover{
-      transform:translateY(-6px);
-      box-shadow:0 18px 40px rgba(15,23,42,.12);
-    }
-
-    /* PARTENAIRES */
-    .partners-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:18px;
-      align-items:center;
-    }
-    .partner-logo{
-      flex:0 0 130px;
-      height:60px;
-      border-radius:14px;
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 8px 20px rgba(15,23,42,.06);
-      border:1px solid rgba(15,23,42,.04);
-      font-size:0.85rem;
-      color:#555;
-    }
-
-    /* CONTACTS */
-    .contacts-grid{
-      display:grid;
-      grid-template-columns:1.2fr 1fr;
-      gap:26px;
-    }
-    .contacts-list{
-      background:#fff;
-      border-radius:18px;
-      padding:20px 22px;
-      box-shadow:0 10px 26px rgba(15,23,42,.06);
-      border:1px solid rgba(15,23,42,.04);
-      font-size:0.9rem;
-    }
-    .contacts-list h3{
-      margin-bottom:10px;
-      color:var(--blue);
-    }
-    .contact-row{
-      padding:8px 0;
-      border-bottom:1px solid #eef0f5;
-    }
-    .contact-row:last-child{border-bottom:none;}
-    .contact-row strong{
-      color:var(--blue);
-    }
-    form{
-      background:#fff;
-      border-radius:18px;
-      padding:20px 22px;
-      box-shadow:0 10px 26px rgba(15,23,42,.06);
-      border:1px solid rgba(15,23,42,.04);
-      font-size:0.9rem;
-    }
-    .field{
-      margin-bottom:14px;
-    }
-    .field label{
-      display:block;
-      margin-bottom:5px;
-      font-size:0.85rem;
-      color:#555;
-    }
-    .field input,
-    .field textarea{
-      width:100%;
-      padding:9px 10px;
-      border-radius:10px;
-      border:1px solid #d5d9e5;
-      font-family:inherit;
-      font-size:0.9rem;
-    }
-    .field textarea{
-      min-height:90px;
-      resize:vertical;
-    }
-
-    /* FOOTER */
-    footer{
-      background:#050915;
-      color:#e0e4ff;
-      padding:32px 8vw 18px;
-      font-size:0.85rem;
-      margin-top:30px;
-    }
-    .footer-top{
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      gap:22px;
-      margin-bottom:16px;
-    }
-    .footer-logo{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .footer-logo span{
-      font-weight:700;
-      letter-spacing:0.12em;
-      font-size:0.8rem;
-    }
-    .footer-links{
-      display:flex;
-      gap:16px;
-      flex-wrap:wrap;
-    }
-    .footer-links a{
-      color:#c4c8f3;
-    }
-    .footer-bottom{
-      display:flex;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      gap:12px;
-      border-top:1px solid rgba(255,255,255,.07);
-      padding-top:10px;
-      color:#9fa3d8;
-    }
-
-    /* RESPONSIVE */
-    @media(max-width:1024px){
-      .hero{
-        grid-template-columns:1fr;
-        padding-top:90px;
-        padding-bottom:50px;
-      }
-      .two-cols,
-      .contacts-grid{
-        grid-template-columns:1fr;
-      }
-      .team-grid{
-        grid-template-columns:repeat(3,minmax(0,1fr));
-      }
-    }
-    @media(max-width:768px){
-      .nav ul{display:none;}
-      .hero{
-        padding:100px 6vw 40px;
-      }
-      section{padding:50px 6vw;}
-      .grid-3{
-        grid-template-columns:1fr;
-      }
-      .team-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-    }
-    @media(max-width:540px){
-      .team-grid{
-        grid-template-columns:1fr 1fr;
-      }
-      .hero-text h1{
-        font-size:2.1rem;
-      }
-    }
-  </style>
+        @media (max-width: 768px) {
+            .episode-card { flex: 0 0 300px; }
+            .hero-manifesto h1 { letter-spacing: -2px; }
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <div class="nav">
-    <div class="logo-block">
-      <img src="KULTURA TV.png" alt="KULTURA TV" style="height:40px;">
-      <div>
-        <div class="logo-text">KULTURA</div>
-        <small style="font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:#d0d4ff;">
-          Savoir · Inspirer · Entreprendre
-        </small>
-      </div>
-    </div>
-    <ul>
-      <li><a href="#home">Accueil</a></li>
-      <li><a href="#chaine">La Chaîne</a></li>
-      <li><a href="#programmes">Programmes</a></li>
-      <li><a href="#equipe">Équipe</a></li>
-      <li><a href="#partenaires">Partenaires</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-cta">
-      <div class="badge-live">Live</div>
-      <a href="#spot" class="btn secondary">Regarder le spot</a>
-    </div>
-  </div>
-</header>
+    <nav>
+        <div class="logo-box">KULTURA TV</div>
+        <div style="font-size: 0.75rem; font-weight: 700;">DIRECT CANAL+ 210</div>
+    </nav>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-text">
-    <div class="hero-tagline">Chaîne Culture & Business – Madagascar</div>
-    <h1>KULTURA TV, la scène télévisée qui fait vibrer la <span>culture</span> et le <span>business</span>.</h1>
-    <p class="hero-p">
-      Une chaîne 100% malgache, en FULL HD, qui connecte artistes, entrepreneurs et décideurs à travers des émissions fortes, inspirantes et engagées.
-    </p>
-    <div class="hero-cta">
-      <a href="#programmes" class="btn">Découvrir les émissions</a>
-      <a href="#partenaires" class="btn secondary">Devenir partenaire</a>
-    </div>
-    <div class="hero-meta">
-      <span><span class="dot"></span> FULL HD 1080</span>
-      <span>CANAL+ 210 · STARTIMES 113 · UHF 711.25 MHz canal 51</span>
-      <span>Public : 16 – 50 ans, passionnés de Culture & Business</span>
-    </div>
-  </div>
-  <div class="hero-video" id="spot">
-    <div class="hero-pill">
-      <span class="dot"></span>
-      <div>
-        <small>Spot officiel</small><br>
-        <strong style="font-size:0.8rem;">Savoir, Inspirer, Entreprendre</strong>
-      </div>
-    </div>
-    <!-- Remplace la vidéo par ton iframe YouTube ou ton fichier mp4 -->
-    <video autoplay muted loop playsinline>
-      <source src="spot-kultura.mp4" type="video/mp4">
-    </video>
-  </div>
-</section>
-
-<!-- LA CHAINE -->
-<section id="chaine">
-  <div class="section-title">
-    <div>
-      <span class="pill">La Chaîne</span>
-      <h2>KULTURA TV – Culture & Business</h2>
-    </div>
-    <p>
-      KULTURA TV est la première chaîne malgache centrée sur la rencontre entre la culture et le business : émissions culturelles, magazines économiques, podcasts, journaux télévisés et programmes musicaux.
-    </p>
-  </div>
-
-  <div class="two-cols">
-    <div>
-      <div class="k-card">
-        <h3 style="margin-bottom:8px;">Ligne éditoriale</h3>
-        <p style="font-size:0.93rem;color:#555;">
-          La chaîne met en avant les talents, les initiatives entrepreneuriales, la créativité et les solutions économiques qui transforment Madagascar. Les contenus sont conçus pour informer, inspirer et donner envie d’entreprendre.
+    <header class="hero-manifesto">
+        <span class="reveal">NOTRE VISION</span>
+        <h1 class="reveal">Savoir, Inspirer,<br>Entreprendre.</h1>
+        <p class="reveal">
+            Kultura TV FM est bien plus qu'une chaîne de télévision. C'est le carrefour de l'excellence malgache, 
+            mêlant business, culture et lifestyle pour une nouvelle génération d'esprits curieux.
         </p>
-      </div>
-      <div class="k-stats">
-        <div class="k-stat">
-          <strong>15 h</strong>
-          <span>Heures fraîches / semaine</span>
+
+        <div class="info-grid reveal">
+            <div class="info-item">
+                <h3>Diffusion</h3>
+                <p>Canal+ Madagascar N°210</p>
+            </div>
+            <div class="info-item">
+                <h3>Portée</h3>
+                <p>Culture, Business & FM</p>
+            </div>
+            <div class="info-item">
+                <h3>Journalisme</h3>
+                <p>Éthique & Immersion</p>
+            </div>
         </div>
-        <div class="k-stat">
-          <strong>60 h</strong>
-          <span>Heures fraîches / mois</span>
-        </div>
-        <div class="k-stat">
-          <strong>720 h</strong>
-          <span>Heures fraîches / an</span>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="k-card">
-        <h3 style="margin-bottom:8px;">Diffusion</h3>
-        <p style="font-size:0.93rem;color:#555;margin-bottom:10px;">
-          Une expérience TV en FULL HD 1080, accessible sur plusieurs réseaux pour toucher l’ensemble du territoire.
-        </p>
-        <ul style="font-size:0.9rem;color:#444;list-style:disc;padding-left:18px;">
-          <li>CANAL+ canal 210</li>
-          <li>TNT : STARTIMES canal 113</li>
-          <li>UHF : fréquence 711.25 MHz canal 51</li>
-        </ul>
-        <p style="font-size:0.9rem;color:#555;margin-top:10px;">
-          Public cible : 16 à 50 ans, professionnels, créateurs, étudiants, dirigeants et passionnés de culture et de business.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+    </header>
 
-<!-- PROGRAMMES -->
-<section id="programmes">
-  <div class="section-title">
-    <div>
-      <span class="pill">Programmes</span>
-      <h2>Émissions & Grille hebdomadaire</h2>
-    </div>
-    <p>
-      Des podcasts business, des magazines culturels, des émissions économiques, un journal télévisé moderne et des rendez‑vous musicaux pour rythmer chaque semaine.
-    </p>
-  </div>
+    <main class="programs-section">
+            <section class="reveal">
+            <div class="category-header">
+                <h2>STEPS AND STORIES </h2>
+            </div>
+            <div class="video-scroller">
+                <a href="https://youtu.be/B25dRpc7M4I" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/B25dRpc7M4I/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>STEPS AND STORIES 01 </h4>
+                        <p>58 min </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/oMoHviOGv_0" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/oMoHviOGv_0/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>STEPS AND STORIES 02 </h4>
+                        <p>50 min 42 </p>
+                    </div>
+                </a>
+                </section>
 
-  <div class="grid-3">
-    <div class="prog-card">
-      <div class="prog-tag">Culture</div>
-      <h3>ART SY KOLOTSAINA</h3>
-      <p>Magazine culturel qui met en lumière les artistes, les créateurs et les patrimoines de Madagascar.</p>
-      <div class="prog-meta">
-                <span>Jour & horaire à définir</span>
-      </div>
-    </div>
 
-    <div class="prog-card">
-      <div class="prog-tag">Lifestyle & Business</div>
-      <h3>BEAUTISSIMA</h3>
-      <p>Émission dédiée à la beauté, au bien‑être et aux métiers qui transforment ces passions en véritables business.</p>
-      <div class="prog-meta">
-        <span>Jour & horaire à définir</span>
-      </div>
-    </div>
+          <section class="reveal">
+            <div class="category-header">
+                <h2>VOANANA </h2>
+            </div>
+            <div class="video-scroller">
+                <a href="https://youtu.be/eC60qlnbte8" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/eC60qlnbte8/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>VOANANA 01 </h4>
+                        <p>29 min </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/lyQLfaUMxlA" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/lyQLfaUMxlA/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>VOANANA 02 </h4>
+                        <p>29 min 21 </p>
+                    </div>
+                </a>
+  
+                 <a href="https://youtu.be/xE6nWE2GjLk" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/xE6nWE2GjLk/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>VOANANA 03 </h4>
+                        <p>25 min 34 </p>
+                    </div>
+                </a>
+                </section>
+        <section class="reveal">
+            <div class="category-header">
+                <h2>ANTSON'NY POETA</h2>
+            </div>
+            <div class="video-scroller">
+                <a href="https://youtu.be/8E4ECT7pSzE" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/8E4ECT7pSzE/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>ANTSON'NY POETA 01  </h4>
+                        <p>47 min 05 </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/j-sII-DGGhg" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/j-sII-DGGhg/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>ANTSON'NY POETA 02  </h4>
+                        <p>57 min 45  </p>
+                    </div>
+                </a>
 
-    <div class="prog-card">
-      <div class="prog-tag">Business</div>
-      <h3>KULTURA B</h3>
-      <p>Le rendez‑vous des entrepreneurs, investisseurs et porteurs de projets qui font bouger l’économie malgache.</p>
-      <div class="prog-meta">
-        <span>Jour & horaire à définir</span>
-      </div>
-    </div>
+                <a href="https://youtu.be/FU0nvsQyzkg" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/FU0nvsQyzkg/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>ANTSON'NY POETA 03  </h4>
+                        <p>46 min 08  </p>
+                    </div>
+                </a>
+        </section>
+        
 
-    <div class="prog-card">
-      <div class="prog-tag">Écologie & Société</div>
-      <h3>EKOKULTURA</h3>
-      <p>Programme qui relie environnement, culture et business responsable, avec des initiatives durables et innovantes.</p>
-      <div class="prog-meta">
-        <span>Jour & horaire à définir</span>
-      </div>
-    </div>
+         <section class="reveal">
+            <div class="category-header">
+                <h2>LA VOIX DU LEADERS </h2>
+            </div>
+            <div class="video-scroller">
+                <a href="https://youtu.be/m9aZV1lYHB4" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/m9aZV1lYHB4/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>LA VOIX DU LEADERS 01  </h4>
+                        <p>27 min 42 </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/3fj2BRZeTzA" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/3fj2BRZeTzA/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>LA VOIX DU LEADERS 02  </h4>
+                        <p>25 min 57  </p>
+                    </div>
+                </a>
 
-    <div class="prog-card">
-      <div class="prog-tag">Information</div>
-      <h3>Journal télévisé</h3>
-      <p>Le JT de KULTURA TV : actualités, économie, culture et initiatives positives aux quatre coins de Madagascar.</p>
-      <div class="prog-meta">
-        <span>Éditions et horaires à définir</span>
-      </div>
-    </div>
+                <a href="https://youtu.be/IE4W5DjmdoI" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/IE4W5DjmdoI/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>LA VOIX DU LEADERS 03  </h4>
+                        <p>27 min 22  </p>
+                    </div>
+                </a>
 
-    <div class="prog-card">
-      <div class="prog-tag">Podcast</div>
-      <h3>Podcast Business</h3>
-      <p>Interviews au format podcast avec des entrepreneurs, experts et leaders qui partagent leurs parcours et conseils.</p>
-      <div class="prog-meta">
-        <span>Disponible en TV et sur les plateformes audio</span>
-      </div>
-    </div>
-  </div>
+                 <a href="https://youtu.be/OBG-TnEmd2Y" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/OBG-TnEmd2Y/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>LA VOIX DU LEADERS 04  </h4>
+                        <p>04 min 53  </p>
+                    </div>
+                </a>
 
-  <!-- Grille TV simple (exemple statique, à relier plus tard en PHP/BD) -->
-  <div class="gridtv" style="margin-top:36px;">
-    <div class="gridtv-header">
-      <div>Grille hebdomadaire (exemple)</div>
-      <div class="gridtv-days">
-        <button class="active" data-day="lundi">Lun</button>
-        <button data-day="mardi">Mar</button>
-        <button data-day="mercredi">Mer</button>
-        <button data-day="jeudi">Jeu</button>
-        <button data-day="vendredi">Ven</button>
-        <button data-day="samedi">Sam</button>
-        <button data-day="dimanche">Dim</button>
-      </div>
-    </div>
-    <table id="table-grille">
-      <thead>
-        <tr>
-          <th>Heure</th>
-          <th>Émission</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Lundi par défaut -->
-        <tr>
-          <td>08:00</td>
-          <td>ART SY KOLOTSAINA</td>
-          <td><span class="tag-type">Culture</span></td>
-        </tr>
-        <tr>
-          <td>20:30</td>
-          <td>KULTURA B</td>
-          <td><span class="tag-type">Business</span></td>
-        </tr>
-        <tr>
-          <td>22:00</td>
-          <td>Journal télévisé</td>
-          <td><span class="tag-type">Info</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+        </section>
 
-<!-- EQUIPE -->
-<section id="equipe">
-  <div class="section-title">
-    <div>
-      <span class="pill">L'équipe</span>
-      <h2>Animateurs, journalistes & administration</h2>
-    </div>
-    <p>
-      Une équipe de professionnels passionnés par la culture, la communication et le développement de Madagascar. Ajoute ici les photos officielles de chaque membre.
-    </p>
-  </div>
+        <section class="reveal" style="margin-top: 50px;">
+            <div class="category-header">
+                <h2>INFO BUSINESS </h2>
+            </div>
+            <div class="video-scroller">
+                 <a href="https://youtu.be/GTIbhudBuN0" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/GTIbhudBuN0/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 01 <h4>
+                        <p>05 min 02 </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/Z8gHFxR0qYE" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/Z8gHFxR0qYE/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 02<h4>
+                        <p>04 min 27 </p>
+                    </div>
+                    </a>
+                  <a href="https://youtu.be/2ml-sJ83QKo" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/2ml-sJ83QKo/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 03</h4>
+                        <p>02 min 50  </p>
+                    </div>
+                </a>
+               <a href="https://youtu.be/T9OGEzBfpUI" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/T9OGEzBfpUI/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 04</h4>
+                        <p>02 min 50  </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/4m54TXnEVn4" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/4m54TXnEVn4/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 05</h4>
+                        <p>03 min 03  </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/o0axd9JHIrk" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/o0axd9JHIrk/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 06</h4>
+                        <p>02 min 37  </p>
+                    </div>
+                </a>
 
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="animateurs">Animateurs</button>
-    <button class="tab-btn" data-tab="journalistes">Journalistes</button>
-    <button class="tab-btn" data-tab="administration">Administration & technique</button>
-  </div>
+                <a href="https://youtu.be/RRIbHpVQRZc" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/RRIbHpVQRZc/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 07</h4>
+                        <p>04 min 57  </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/lr-wPSj8GrE" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/lr-wPSj8GrE/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 08</h4>
+                        <p>05 min 19 </p>
+                    </div>
+                </a>
 
-  <!-- Exemple : remplace les images par tes vraies photos -->
-  <div class="team-grid" id="tab-animateurs">
-    <div class="person">
-      <img src="anim1.jpg" alt="Animateur 1">
-      <div class="person-body">
-        <h4>Nom Animateur 1</h4>
-        <span>Animateur / Présentateur</span>
-      </div>
-    </div>
-    <div class="person">
-      <img src="anim2.jpg" alt="Animateur 2">
-      <div class="person-body">
-        <h4>Nom Animateur 2</h4>
-        <span>Présentatrice</span>
-      </div>
-    </div>
-    <div class="person">
-      <img src="anim3.jpg" alt="Animateur 3">
-      <div class="person-body">
-        <h4>Nom Animateur 3</h4>
-        <span>Animateur culturel</span>
-      </div>
-    </div>
-    <div class="person">
-      <img src="anim4.jpg" alt="Animateur 4">
-      <div class="person-body">
-        <h4>Nom Animateur 4</h4>
-        <span>Chroniqueur business</span>
-      </div>
-    </div>
-  </div>
+                <a href="https://youtu.be/OiKRBY5MHuY" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/OiKRBY5MHuY/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 09</h4>
+                        <p>05 min </p>
+                    </div>
+                </a>
 
-  <div class="team-grid" id="tab-journalistes" style="display:none;">
-    <div class="person">
-      <img src="jour1.jpg" alt="Journaliste 1">
-      <div class="person-body">
-        <h4>Nom Journaliste 1</h4>
-        <span>Journaliste</span>
-      </div>
-    </div>
-    <div class="person">
-      <img src="jour2.jpg" alt="Journaliste 2">
-      <div class="person-body">
-        <h4>Nom Journaliste 2</h4>
-        <span>Journaliste</span>
-      </div>
-    </div>
-    <!-- Ajoute d'autres cards -->
-  </div>
+                 <a href="https://youtu.be/qPJmOUuIsyI" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/qPJmOUuIsyI/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 10</h4>
+                        <p>03 min 43 </p>
+                    </div>
+                </a>
+               
+                 <a href="https://youtu.be/95qJHWouF9A" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/95qJHWouF9A/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 11</h4>
+                        <p>03 min 43 </p>
+                    </div>
+                </a>
 
-  <div class="team-grid" id="tab-administration" style="display:none;">
-    <div class="person">
-      <img src="admin1.jpg" alt="Directeur général">
-      <div class="person-body">
-        <h4>RATOMPOARINOSY Harinoro</h4>
-        <span>Directeur général</span>
-      </div>
-    </div>
-    <div class="person">
-      <img src="tahiana.jpg" alt="Signataire">
-      <div class="person-body">
-        <h4>RANDRIANARISOA Tahianarinaly</h4>
-        <span>Signataire – Représentant légal</span>
-      </div>
-    </div>
-    <div class="person">
-      <img src="admin3.jpg" alt="Responsable technique">
-      <div class="person-body">
-        <h4>RAHARIFIDY Rado</h4>
-        <span>Responsable technique</span>
-      </div>
-    </div>
-    <div class="person">
-      <img src="admin4.jpg" alt="Responsable programmation">
-      <div class="person-body">
-        <h4>RANAIVOSON Mbinintsoa</h4>
-        <span>Responsable programmation</span>
-      </div>
-    </div>
-  </div>
-</section>
+                 <a href="https://youtu.be/S4HWg4Tr8hQ" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/S4HWg4Tr8hQ/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 12</h4>
+                        <p>05 min 12 </p>
+                    </div>
+                </a>
 
-<!-- PARTENAIRES -->
-<section id="partenaires">
-  <div class="section-title">
-    <div>
-      <span class="pill">Partenaires</span>
-      <h2>Partenaires & annonceurs</h2>
-    </div>
-    <p>
-      KULTURA TV offre un environnement premium pour vos campagnes : audience ciblée, programmes qualitatifs et forte visibilité sur tout Madagascar.
-    </p>
-  </div>
+                 <a href="https://youtu.be/2j2LzEwkkUw" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/2j2LzEwkkUw/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO BUSINESS 13</h4>
+                        <p>02 min 50 </p>
+                    </div>
+                </a>
+            </div>
+        </section>
 
-  <div class="partners-row">
-   <div class="partner-logo"><img src="IISS logo.jpg" alt="IISS"></div>
-    <div class="partner-logo"><img src="Is studio.png" alt="IS STUDIO"></div>
-   <div class="partner-logo"><img src="isl.jpg" alt="ISL"></div>
-<div class="partner-logo"><img src="K4M.jpg" alt="K4M"></div>
-  </div>
+         <section class="reveal">
+            <div class="category-header">
+                <h2>Beautissima</h2>
+            </div>
+            <div class="video-scroller">
+                <a href="https://youtu.be/9FoiurpYBVs" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/9FoiurpYBVs/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>Beautissima 01 </h4>
+                        <p>5min 32 </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/SbvvT9mSVVY" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/SbvvT9mSVVY/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>Beautissima 02 </h4>
+                        <p>14 min 20 </p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/nJtXcvFcp8c" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/nJtXcvFcp8c/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>Beautissima  Dream Skin </h4>
+                        <p>16 min 48  </p>
+                    </div>
+                </a>
+                 <a href="https://youtu.be/NRHQju5CgFM" target="_blank" class="episode-card">
+                    <div class="thumb">
+                        <img src="https://img.youtube.com/vi/NRHQju5CgFM/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>Beautissima RICHARD LAMBA MENA  </h4>
+                        <p>26 min 40  </p>
+                    </div>
+                  </a>
 
-  <div style="margin-top:26px;" class="two-cols">
-    <div>
-      <h3 style="margin-bottom:10px;color:var(--blue);">Pourquoi devenir partenaire KULTURA TV ?</h3>
-      <ul style="font-size:0.93rem;color:#555;list-style:disc;padding-left:18px;">
-        <li>Chaîne spécialisée Culture & Business en FULL HD.</li>
-        <li>Public actif : 16–50 ans, urbain, connecté, entrepreneur ou passionné.</li>
-        <li>Présence sur CANAL+, TNT, UHF et réseaux sociaux.</li>
-        <li>Possibilités de sponsoring d’émissions phares et de contenus sur mesure.</li>
-      </ul>
-    </div>
-    <div>
-      <form action="traitement-partenaire.php" method="post">
-        <h3 style="margin-bottom:10px;color:var(--blue);">Devenir partenaire / annonceur</h3>
-        <div class="field">
-          <label>Nom de la structure</label>
-          <input type="text" name="structure" required>
-        </div>
-        <div class="field">
-          <label>Personne de contact</label>
-          <input type="text" name="contact" required>
-        </div>
-        <div class="field">
-          <label>Email</label>
-          <input type="email" name="email" required>
-        </div>
-        <div class="field">
-          <label>Téléphone</label>
-          <input type="text" name="phone">
-        </div>
-        <div class="field">
-          <label>Budget média (optionnel)</label>
-          <input type="text" name="budget">
-        </div>
-        <div class="field">
-          <label>Message</label>
-          <textarea name="message" required></textarea>
-        </div>
-        <button type="submit" class="btn">Envoyer la demande</button>
-      </form>
-    </div>
-  </div>
-</section>
+                </div>
+        </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-title">
-    <div>
-      <span class="pill">Contact</span>
-      <h2>Contacts & localisation</h2>
-    </div>
-    <p>
-      Pour toute demande d’information, d’annonce, de partenariat ou de programmation, contactez directement l’équipe KULTURA TV.
-    </p>
-  </div>
+        <section class="reveal" style="margin-top: 50px;">
+            <div class="category-header">
+                <h2>INFO CULTURE </h2>
+            </div>
+            <div class="video-scroller">
+                <div class="video-scroller">
+                 <a href="https://youtu.be/tm1j1_Qx6n0" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/tm1j1_Qx6n0/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 01</h4>
+                        <p>03 min 10 </p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/lvr0tOXVQuk" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/lvr0tOXVQuk/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 02</h4>
+                        <p>03 min 24 </p>
+                    </div>
+                </a>
 
-  <div class="contacts-grid">
-    <div class="contacts-list">
-      <h3>Contacts principaux</h3>
-      <div class="contact-row">
-        <strong>Numéro phone </strong><br>
-         <p><strong> TELMA : 038 60 427 41 </strong></p>
-          <p><strong> ORANGE : 037 89 14 995 </strong></p>
-           <p><strong> AIRTEL  :  033 60 585 02 </strong></p>
-      </div>
-      <div class="contact-row">
-        <strong>Signataire</strong><br>
-        RANDRIANARISOA Tahianarinaly – 034 60 499 50
-      </div>
-      <div class="contact-row">
-        <strong>Directeur général</strong><br>
-        RATOMPOARINOSY Harinoro – 032 24 064 98
-      </div>
-      <div class="contact-row">
-        <strong>Responsable technique</strong><br>
-        RAHARIFIDY Rado – 032 05 753 07
-      </div>
-      <div class="contact-row">
-        <strong>Superviseur</strong><br>
-        RATOLOJANAHARY Manitra – 032 05 753 00
-      </div>
-      <div class="contact-row">
-        <strong>Responsable programmation</strong><br>
-        RANAIVOSON Mbinintsoa – 034 09 039 70
-      </div>
-      <div class="contact-row">
-        <strong>Adresse</strong><br>
-        <!-- Remplace par l’adresse exacte -->
-        Lot XX – Ville, Madagascar
-      </div>
-      <div class="contact-row">
-        <strong>Facebook</strong><br>
-        <a href="https://www.facebook.com/freefmmada" target="_blank">KULTURA TV sur Facebook</a>
-      </div>
-    </div>
+                 <a href="https://youtu.be/0-QMUT5R05c" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/0-QMUT5R05c/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 03</h4>
+                        <p>02 min 31 </p>
+                    </div>
+                </a>
 
-    <form action="contact-kultura.php" method="post">
-      <h3 style="margin-bottom:10px;color:var(--blue);">Écrire à la chaîne</h3>
-      <div class="field">
-        <label>Nom & prénom</label>
-        <input type="text" name="nom" required>
-      </div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" name="email" required>
-      </div>
-      <div class="field">
-        <label>Sujet</label>
-        <input type="text" name="sujet" required>
-      </div>
-      <div class="field">
-        <label>Message</label>
-        <textarea name="message" required></textarea>
-      </div>
-      <button type="submit" class="btn">Envoyer le message</button>
-    </form>
-  </div>
-</section>
+                 <a href="https://youtu.be/KzBOaMmz6CA" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/KzBOaMmz6CA/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 04</h4>
+                        <p>04 min 18 </p>
+                    </div>
+                </a>
 
-<footer>
-  <div class="footer-top">
-    <div class="footer-logo">
-      <img src="KULTURA TV.png" alt="KULTURA TV" style="height:40px;"></div>
-      <span>KULTURA TV</span>
-    </div>
-    <div class="footer-links">
-      <a href="#chaine">La Chaîne</a>
-      <a href="#programmes">Programmes</a>
-      <a href="#equipe">Équipe</a>
-      <a href="#partenaires">Partenaires</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <div class="footer-links">
-      <a href="https://www.facebook.com/freefmmada" target="_blank">Facebook</a>
-      <!-- Ajoute YouTube, Instagram, etc. -->
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div>© <span id="year"></span> KULTURA TV – Savoir, Inspirer, Entreprendre.</div>
-    <div>Chaîne Culture & Business – FULL HD 1080 – Madagascar.</div>
-  </div>
-</footer>
+                 <a href="https://youtu.be/yQ6_b1g1dDo" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/yQ6_b1g1dDo/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 05</h4>
+                        <p>04 min 18 </p>
+                    </div>
+                </a>
 
-<script>
-  // Année dynamique
-  document.getElementById('year').textContent = new Date().getFullYear();
+                 <a href="https://youtu.be/t-LSyoxOrpA" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/t-LSyoxOrpA/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 06</h4>
+                        <p>03 min 26 </p>
+                    </div>
+                </a>
 
-  // Tabs équipe
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const tabContents = {
-    animateurs: document.getElementById('tab-animateurs'),
-    journalistes: document.getElementById('tab-journalistes'),
-    administration: document.getElementById('tab-administration')
-  };
+                 <a href="https://youtu.be/YcrRikcXmxE" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/YcrRikcXmxE/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 07</h4>
+                        <p>07 min 26 </p>
+                    </div>
+                </a>
 
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+                <a href="https://youtu.be/S2uGtw9QX4E" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/S2uGtw9QX4E/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>INFO CULTURE 08</h4>
+                        <p>06 min 50 </p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    
+            <section class="reveal" style="margin-top: 50px;">
+            <div class="category-header">
+                <h2>CODE PROJET  </h2>
+            </div>
+            <div class="video-scroller">
+                <div class="video-scroller">
+                 <a href="https://youtu.be/co7Ia04meS8" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/co7Ia04meS8/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4> P01 CODE PROJET  </h4>
+                        <p>06 min 27 </p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/uONW26sF6-E" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/uONW26sF6-E/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>P02 CODE PROJET </h4>
+                        <p>08 min 05 </p>
+                    </div>
+                </a>
 
-      Object.keys(tabContents).forEach(key => {
-        tabContents[key].style.display = 'none';
-      });
-      const target = btn.getAttribute('data-tab');
-      tabContents[target].style.display = 'grid';
-    });
-  });
+                 <a href="https://youtu.be/0TMfLrWkyX0" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/0TMfLrWkyX0/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>P03 CODE PROJET </h4>
+                        <p>05 min 20 </p>
+                    </div>
+                </a>
 
-  // Mini système de grille TV (simple, statique pour l’instant)
-  const grilleData = {
-    lundi: [
-      {heure:'08:00', emission:'ART SY KOLOTSAINA', type:'Culture'},
-      {heure:'20:30', emission:'KULTURA B', type:'Business'},
-      {heure:'22:00', emission:'Journal télévisé', type:'Info'}
-    ],
-    mardi: [
-      {heure:'08:00', emission:'BEAUTISSIMA', type:'Lifestyle'},
-      {heure:'19:00', emission:'Podcast Business', type:'Business'},
-      {heure:'21:30', emission:'Émission musicale', type:'Musique'}
-    ],
-    mercredi: [
-      {heure:'09:00', emission:'EKOKULTURA', type:'Écologie'},
-      {heure:'20:30', emission:'KULTURA B', type:'Business'}
-    ],
-    jeudi: [
-      {heure:'08:00', emission:'ART SY KOLOTSAINA', type:'Culture'},
-      {heure:'21:00', emission:'Journal télévisé', type:'Info'}
-    ],
-    vendredi: [
-      {heure:'19:00', emission:'Podcast Business', type:'Business'},
-      {heure:'22:00', emission:'Émission musicale', type:'Musique'}
-    ],
-    samedi: [
-      {heure:'10:00', emission:'ART SY KOLOTSAINA – Spécial', type:'Culture'},
-      {heure:'20:30', emission:'KULTURA B – Grand format', type:'Business'}
-    ],
-    dimanche: [
-      {heure:'09:00', emission:'EKOKULTURA', type:'Écologie'},
-      {heure:'18:00', emission:'Magazine culturel', type:'Culture'}
-    ]
-  };
+                 <a href="https://youtu.be/Xim4TlEgLWk" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/Xim4TlEgLWk/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>P04 CODE PROJET </h4>
+                        <p>06 min 58 </p>
+                    </div>
+                </a>
 
-  const dayButtons = document.querySelectorAll('.gridtv-days button');
-  const tbody = document.querySelector('#table-grille tbody');
+                 <a href="https://youtu.be/-Obs4ymBYRw" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/-Obs4ymBYRw/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>P05 CODE PROJET </h4>
+                        <p>05 min 35 </p>
+                    </div>
+                </a>
 
-  function renderDay(day){
-    tbody.innerHTML = '';
-    grilleData[day].forEach(ligne => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ligne.heure}</td>
-        <td>${ligne.emission}</td>
-        <td><span class="tag-type">${ligne.type}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
+                 <a href="https://youtu.be/3SGklK7Gu9E" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/3SGklK7Gu9E/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>P06 CODE PROJET </h4>
+                        <p>04 min 41 </p>
+                    </div>
+                </a>
 
-  dayButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      dayButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderDay(btn.getAttribute('data-day'));
-    });
-  });
+                 <a href="https://youtu.be/a-AQiCgWgss" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/a-AQiCgWgss/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>P07 CODE PROJET</h4>
+                        <p>05 min 55 </p>
+                    </div>
+                </a>
 
-  // charge le lundi par défaut
-  renderDay('lundi');
-</script>
+                 <a href="https://youtu.be/eInRy4Dq1Fw" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/eInRy4Dq1Fw/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4>P08 CODE PROJET</h4>
+                        <p>30 min 11 </p>
+                    </div>
+                </a>
+            </div>
+        </section>
 
+         <section class="reveal" style="margin-top: 50px;">
+            <div class="category-header">
+                <h2>INNOV </h2>
+            </div>
+            <div class="video-scroller">
+                <div class="video-scroller">
+                 <a href="https://youtu.be/YUR67NLy374" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/YUR67NLy374/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4> INNOV 01  </h4>
+                        <p>10 min 34 </p>
+                    </div>
+                </a>
+                <a href="https://youtu.be/sDqDqC49cM0" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/sDqDqC49cM0/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4> INNOV 02 </h4>
+                        <p>11 min 13 </p>
+                    </div>
+                </a>
+
+                 <a href="https://youtu.be/snlzW8X-68g" target="_blank" class="episode-card">
+                    <div class="thumb">
+                         <img src="https://img.youtube.com/vi/snlzW8X-68g/maxresdefault.jpg" alt="">
+                        <div class="play-btn">▶</div>
+                    </div>
+                    <div class="meta">
+                        <h4> INNOV 03</h4>
+                        <p> 12 min 19 </p>
+                    </div>
+                </a>
+        </section>
+    </main>
+    <footer style="padding: 100px 5%; border-top: 1px solid #222; text-align: center; color: var(--text-gray); font-size: 0.9rem;">
+        <p>© 2026 KULTURA TV FM. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal').forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+        });
+    </script>
 </body>
 </html>
-
-
